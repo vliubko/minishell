@@ -9,5 +9,6 @@
 # include "sys/param.h"
 # include "stdio.h"
 # include "unistd.h"
+# include "signal.h"
 
 #endif
