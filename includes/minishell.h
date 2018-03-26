@@ -28,6 +28,7 @@ typedef	struct		s_env
 
 t_env				*g_env;
 
-void 				init_env(int ac, char **av, char **envp);
+void 				env_init(int ac, char **av, char **envp);
+void				env_print();
 
 #endif

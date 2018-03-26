@@ -30,39 +30,67 @@ void	get_input(char **line)
 	ft_strdel(&trim);
 }
 
-void	fork_me(char **av, char **envp)
-{
-	pid_t	process;
+//void	fork_me(char **av, char **envp)
+//{
+//	pid_t	process;
+//
+//	process = fork();
+//	if (process == 0)
+//	{
+//		execve("/bin/ls", 0, envp); // use execve(av[0], av, envp)!
+//		exit(0);
+//	}
+//	wait(&process);
+//}
 
-	process = fork();
-	if (process == 0)
+int		exe_command(char **str)
+{
+	//if (ft_strequ(str, "ls"))
+	//	fork_me(0, 0);
+	if (ft_strequ(str[0], "exit"))
+		return (-1);
+	if (ft_strequ(str[0], "env"))
+		env_print();
+	return (0);
+}
+
+int 	multi_commands(char **commands)
+{
+	int 	i;
+	char 	**run;
+	int 	ret;
+
+	i = -1;
+	while (commands[++i])
 	{
-		execve("/bin/ls", av, envp); // use execve(av[0], av, envp)!
-		exit(0);
+		run = ft_strsplit_whitespaces(commands[i]);
+		ret = exe_command(run);
+		ft_free_2d_array(run);
+		if (ret == -1)
+			return (-1);
 	}
-	wait(&process);
+	return (0);
 }
 
 int		main(int ac, char **av, char **envp)
 {
 	char	*line;
+	char 	**commands;
+	int 	ret;
 
 	(void)ac;
 //	(void)av;
 //	(void)envp;
-	init_env(ac, av, envp);
+	env_init(ac, av, envp);
 	while (1)
 	{
 		welcome_message();
 		get_input(&line);
-		if (ft_strequ(line, "ls"))
-			fork_me(av, envp);
-		if (ft_strequ(line, "exit"))
-		{
-			ft_strdel(&line);
-			exit(0);
-		}
-		ft_strdel(&line);
+		commands = ft_strsplit(line, ';');
+		ret = multi_commands(commands);
+		//ft_strdel(&line);
+		if (ret == -1)
+			break ;
 	}
 	return (0);
 }

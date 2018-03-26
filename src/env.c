@@ -6,13 +6,28 @@
 /*   By: vliubko <vliubko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 14:09:06 by vliubko           #+#    #+#             */
-/*   Updated: 2018/03/26 14:10:48 by vliubko          ###   ########.fr       */
+/*   Updated: 2018/03/26 14:21:54 by vliubko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_env(int ac, char **av, char **envp)
+void	env_print(void)
+{
+	t_env	*print;
+
+	print = g_env;
+	while (print)
+	{
+		ft_putstr(print->name);
+		ft_putstr("=");
+		ft_putendl(print->value);
+		print = print->next;
+	}
+}
+
+
+void	env_init(int ac, char **av, char **envp)
 {
 	int		i;
 	t_env	*head;
@@ -33,3 +48,4 @@ void	init_env(int ac, char **av, char **envp)
 	}
 	g_env = head;
 }
+
