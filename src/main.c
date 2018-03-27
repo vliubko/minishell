@@ -43,14 +43,23 @@ void	get_input(char **line)
 //	wait(&process);
 //}
 
-int		exe_command(char **str)
+int 	check_builtins(char **command)
 {
+	if (ft_strequ(command[0], "exit"))
+		return (-1);
+	return (0);
+}
+
+int		exe_command(char **command)
+{
+	if (check_builtins(command) == -1)
+		return (-1);
 	//if (ft_strequ(str, "ls"))
 	//	fork_me(0, 0);
-	if (ft_strequ(str[0], "exit"))
-		return (-1);
-	if (ft_strequ(str[0], "env"))
-		env_print();
+//	if (ft_strequ(str[0], "exit"))
+//		return (-1);
+//	if (ft_strequ(str[0], "env"))
+//		env_print();
 	return (0);
 }
 
@@ -66,6 +75,8 @@ int 	multi_commands(char **commands)
 		run = ft_strsplit_whitespaces(commands[i]);
 		ret = exe_command(run);
 		ft_free_2d_array(run);
+		if (ret == -1)
+			return (-1);
 	}
 	return (0);
 }
