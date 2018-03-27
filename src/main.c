@@ -66,8 +66,6 @@ int 	multi_commands(char **commands)
 		run = ft_strsplit_whitespaces(commands[i]);
 		ret = exe_command(run);
 		ft_free_2d_array(run);
-		if (ret == -1)
-			return (-1);
 	}
 	return (0);
 }
@@ -88,7 +86,7 @@ int		main(int ac, char **av, char **envp)
 		get_input(&line);
 		commands = ft_strsplit(line, ';');
 		ret = multi_commands(commands);
-		//ft_strdel(&line);
+		ft_free_2d_array(commands);
 		if (ret == -1)
 			break ;
 	}

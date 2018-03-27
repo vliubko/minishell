@@ -48,4 +48,3 @@ void	env_init(int ac, char **av, char **envp)
 	}
 	g_env = head;
 }
-
