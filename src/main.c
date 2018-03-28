@@ -118,6 +118,7 @@ int 	fork_run_cmd(char *path, char **av)
 		exit(0);
 	}
 	wait(&process);
+	ft_free_2d_array(envp);
 	if (path)
 		ft_strdel(&path);
 	return (1);
@@ -152,8 +153,8 @@ char 	*ft_pathjoin(char *p1, char *p2)
 		tmp = ft_strjoin(p1, "/");
 	else
 		tmp = ft_strdup(p1);
-
 	ret = ft_strjoin(tmp, p2);
+	ft_strdel(&tmp);
 	return (ret);
 }
 
@@ -163,8 +164,11 @@ int 	check_bins(char **command)
 	int				i;
 	char			*full_path;
 	struct stat		f;
+	char 			*leak;
 
-	path = ft_strsplit(env_value_by_name("PATH"), ':');
+	leak = env_value_by_name("PATH");
+	path = ft_strsplit(leak, ':');
+	ft_strdel(&leak);
 	i = -1;
 	while (path && path[++i])
 	{
@@ -175,8 +179,12 @@ int 	check_bins(char **command)
 		if (lstat(full_path, &f) == -1)
 			ft_strdel(&full_path);
 		else
+		{
+			ft_free_2d_array(path);
 			return (access_check(full_path, f, command));
+		}
 	}
+	ft_free_2d_array(path);
 	return (0);
 }
 
@@ -246,6 +254,8 @@ int		main(int ac, char **av, char **envp)
 		//print_list ();
 		get_input(&line);
 		commands = ft_strsplit(line, ';');
+		if (line)
+			ft_strdel(&line);
 		ret = multi_commands(commands);
 		ft_free_2d_array(commands);
 		if (ret == -1)
