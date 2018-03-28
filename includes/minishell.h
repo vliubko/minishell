@@ -19,6 +19,13 @@
 # include "unistd.h"
 # include "signal.h"
 
+# define BLUE_FONT "\e[38;5;69m"
+# define RED_FONT "\e[38;5;196m"
+# define GREEN_FONT "\e[38;5;46m"
+# define YELLOW_FONT "\e[38;5;226m"
+# define COLOR_OFF "\e[0m"
+# define INVERTED 	"\e[7m"
+
 typedef	struct		s_env
 {
 	char 			*name;
@@ -30,5 +37,7 @@ t_env				*g_env;
 
 void 				env_init(int ac, char **av, char **envp);
 void				env_print();
+int 				bi_echo(char **av);
+char 				*env_value_by_name(char *str);
 
 #endif

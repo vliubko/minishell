@@ -12,12 +12,36 @@
 
 #include "minishell.h"
 
+char 	*env_value_by_name(char *str)
+{
+	t_env	*tmp;
+
+	tmp = g_env;
+
+	while (tmp)
+	{
+		if (ft_strequ(tmp->name, str))
+			return (ft_strdup(tmp->value));
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
 void	welcome_message(void)
 {
 	char	buf[MAXPATHLEN + 1];
+	char 	*login;
 
 	getcwd(buf, MAXPATHLEN);
-	ft_putstr(buf);
+	login = env_value_by_name("USER");
+	ft_putstr(GREEN_FONT);
+	ft_putstr(login);
+	ft_strdel(&login);
+	ft_putstr(BLUE_FONT);
+	ft_putstr("@ ");
+	ft_putstr(YELLOW_FONT);
+	ft_putendl(buf);
+	ft_putstr(COLOR_OFF);
 	ft_putstr(" $> ");
 }
 
@@ -43,10 +67,13 @@ void	get_input(char **line)
 //	wait(&process);
 //}
 
+
 int 	check_builtins(char **command)
 {
 	if (ft_strequ(command[0], "exit"))
 		return (-1);
+	if (ft_strequ(command[0], "echo"))
+		return (bi_echo(command + 1));
 	return (0);
 }
 

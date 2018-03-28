@@ -21,7 +21,8 @@ LIBFT		:= libft/libft.a
 HEADER		 = includes/minishell.h
 
 FILES		:= main \
-				env
+				env \
+				echo
 
 SRC = $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ = $(SRC:.c=.o)
