@@ -18,6 +18,7 @@
 # include "stdio.h"
 # include "unistd.h"
 # include "signal.h"
+# include "sys/stat.h"
 
 # define BLUE_FONT "\e[38;5;69m"
 # define RED_FONT "\e[38;5;196m"

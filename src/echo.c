@@ -42,7 +42,11 @@ static int		echo_dollar_sign(char *str)
 
 	i = -1;
 	while (str[++i] != '$')
+	{
+		if (str[i] == 34 || str[i] == 39)
+			continue ;
 		write(1, &str[i], 1);
+	}
 	ret = ft_strchr(str, '$') + 1;
 	value = env_value_by_name(ret);
 	leak_clean = value;
