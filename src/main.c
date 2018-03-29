@@ -238,6 +238,21 @@ void 	print_list(void)
 	}
 }
 
+void	free_env(void)
+{
+	t_env *tmp;
+
+	while (g_env)
+	{
+		ft_strdel(&g_env->name);
+		ft_strdel(&g_env->value);
+		tmp = g_env;
+		free(tmp);
+		g_env = g_env->next;
+	}
+	free(g_env);
+}
+
 int		main(int ac, char **av, char **envp)
 {
 	char	*line;
@@ -259,7 +274,10 @@ int		main(int ac, char **av, char **envp)
 		ret = multi_commands(commands);
 		ft_free_2d_array(commands);
 		if (ret == -1)
-			break ;
+		{
+			free_env();
+			break;
+		}
 	}
 	return (0);
 }

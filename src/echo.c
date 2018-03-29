@@ -37,7 +37,6 @@ static int		echo_dollar_sign(char *str)
 {
 	char	*ret;
 	char	*value;
-	char	*leak_clean;
 	int		i;
 
 	i = -1;
@@ -49,11 +48,10 @@ static int		echo_dollar_sign(char *str)
 	}
 	ret = ft_strchr(str, '$') + 1;
 	value = env_value_by_name(ret);
-	leak_clean = value;
 	if (value)
 	{
 		ft_putstr(value);
-		ft_strdel(&leak_clean);
+		ft_strdel(&value);
 		return (1);
 	}
 	return (0);
@@ -69,6 +67,23 @@ static void		newline_check(int flag)
 		ft_putstr("%");
 		ft_putstr(COLOR_OFF);
 		ft_putstr("\n");
+	}
+}
+
+void			echo_run(char **av, int i)
+{
+	while (av[++i])
+	{
+		if (ft_strchr(av[i], '$'))
+		{
+			echo_dollar_sign(av[i]);
+			if (av[i + 1])
+				ft_putstr(" ");
+			continue;
+		}
+		echo_print(av[i]);
+		if (av[i + 1])
+			ft_putstr(" ");
 	}
 }
 
@@ -88,19 +103,7 @@ int				bi_echo(char **av)
 	i = -1;
 	if (echo_n)
 		i++;
-	while (av[++i])
-	{
-		if (ft_strchr(av[i], '$'))
-		{
-			echo_dollar_sign(av[i]);
-			if (av[i + 1])
-				ft_putstr(" ");
-			continue;
-		}
-		echo_print(av[i]);
-		if (av[i + 1])
-			ft_putstr(" ");
-	}
+	echo_run(av, i);
 	newline_check(echo_n);
 	return (1);
 }
