@@ -38,7 +38,11 @@ t_env				*g_env;
 
 void 				env_init(int ac, char **av, char **envp);
 void				env_print();
-int 				bi_echo(char **av);
-char 				*env_value_by_name(char *str);
+int 				multi_commands(char **commands);
+int					bi_echo(char **av);
+char 	            *ft_pathjoin(char *p1, char *p2);
+int					bi_cd(char **av);
+char 				*get_env_value_by_name(char *str);
+
 
 #endif

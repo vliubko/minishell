@@ -22,7 +22,9 @@ HEADER		 = includes/minishell.h
 
 FILES		:= main \
 				env \
-				echo
+				echo \
+				bi_cd \
+				entered_commands_check
 
 SRC = $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ = $(SRC:.c=.o)

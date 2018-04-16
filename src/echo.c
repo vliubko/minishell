@@ -47,7 +47,7 @@ static int		echo_dollar_sign(char *str)
 		write(1, &str[i], 1);
 	}
 	ret = ft_strchr(str, '$') + 1;
-	value = env_value_by_name(ret);
+	value = get_env_value_by_name(ret);
 	if (value)
 	{
 		ft_putstr(value);

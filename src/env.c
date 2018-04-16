@@ -6,7 +6,7 @@
 /*   By: vliubko <vliubko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 14:09:06 by vliubko           #+#    #+#             */
-/*   Updated: 2018/03/26 14:21:54 by vliubko          ###   ########.fr       */
+/*   Updated: 2018/03/30 11:16:26 by vliubko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	env_print(void)
 		print = print->next;
 	}
 }
-
 
 void	env_init(int ac, char **av, char **envp)
 {
