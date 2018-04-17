@@ -15,34 +15,7 @@ int 	check_builtins(char **command)
     return (0);
 }
 
-char 	**list_to_array(void)
-{
-    t_env	*list;
-    char 	**ret;
-    char 	*tmp;
-    int 	new_size;
 
-    list = g_env;
-    new_size = 0;
-    while (list)
-    {
-        new_size++;
-        list = list->next;
-    }
-    ret = (char**)malloc((sizeof(char*) * (new_size + 1)));
-    list = g_env;
-    new_size = 0;
-    while (list)
-    {
-        tmp = ft_strjoin(list->name, "=");
-        ret[new_size] = ft_strjoin(tmp, list->value);
-        ft_strdel(&tmp);
-        new_size++;
-        list = list->next;
-    }
-    ret[new_size] = NULL;
-    return (ret);
-}
 
 int 	fork_run_cmd(char *path, char **av)
 {
@@ -113,8 +86,11 @@ int 	check_bins(char **command)
 
 int		exe_command(char **command)
 {
-    int 	bi;
+    int     bi;
+    int     i = 0;
 
+    while (command[++i])
+        command[i] = tild_replace_home(command[i]);
     if ((bi = check_builtins(command)) == 1 || check_bins(command))
         return (1);
     if (bi == -1)

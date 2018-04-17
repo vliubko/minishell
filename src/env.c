@@ -19,7 +19,7 @@ void	env_print(void)
 	print = g_env;
 	while (print)
 	{
-		ft_putstr(print->name);
+		ft_putstr(print->key);
 		ft_putstr("=");
 		ft_putendl(print->value);
 		print = print->next;
@@ -38,7 +38,7 @@ void	env_init(int ac, char **av, char **envp)
 	head = g_env;
 	while (envp[i])
 	{
-		g_env->name = ft_strsub(envp[i], 0, ft_strchr(envp[i], '=') - envp[i]);
+		g_env->key = ft_strsub(envp[i], 0, ft_strchr(envp[i], '=') - envp[i]);
 		g_env->value = ft_strdup(ft_strchr(envp[i], '=') + 1);
 		if (!envp[++i])
 			break ;

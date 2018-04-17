@@ -29,7 +29,7 @@
 
 typedef	struct		s_env
 {
-	char 			*name;
+	char 			*key;
 	char 			*value;
 	struct s_env	*next;
 }					t_env;
@@ -42,7 +42,10 @@ int 				multi_commands(char **commands);
 int					bi_echo(char **av);
 char 	            *ft_pathjoin(char *p1, char *p2);
 int					bi_cd(char **av);
-char 				*get_env_value_by_name(char *str);
+char                *tild_replace_home(char *line);
+char 				*get_env_value_by_name(char *key);
+void                change_env_value_by_name(char *key, char *value);
+char 	            **list_to_array(void);
 
 
 #endif

@@ -24,7 +24,8 @@ FILES		:= main \
 				env \
 				echo \
 				bi_cd \
-				entered_commands_check
+				entered_commands_check \
+				env_commands
 
 SRC = $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ = $(SRC:.c=.o)

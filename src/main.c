@@ -12,20 +12,7 @@
 
 #include "minishell.h"
 
-char 	*get_env_value_by_name(char *str)
-{
-	t_env	*tmp;
 
-	tmp = g_env;
-
-	while (tmp)
-	{
-		if (ft_strequ(tmp->name, str))
-			return (ft_strdup(tmp->value));
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
 
 
 void	welcome_message(void)
@@ -95,7 +82,7 @@ void 	print_list(void)
 
 	while(list)
 	{
-		printf("%s=%s\n", list->name, list->value);
+		printf("%s=%s\n", list->key, list->value);
 		list = list->next;
 	}
 }
@@ -106,7 +93,7 @@ void	free_env(void)
 
 	while (g_env)
 	{
-		ft_strdel(&g_env->name);
+		ft_strdel(&g_env->key);
 		ft_strdel(&g_env->value);
 		tmp = g_env;
 		free(tmp);
@@ -115,6 +102,15 @@ void	free_env(void)
 	free(g_env);
 }
 
+void	signal_check(int signo)
+{
+	if (signo == SIGINT)
+	{
+		ft_putstr("\n");
+		welcome_message();
+		signal(SIGINT, signal_check);
+	}
+}
 
 int		main(int ac, char **av, char **envp)
 {
@@ -123,11 +119,11 @@ int		main(int ac, char **av, char **envp)
 	int 	ret;
 
 	(void)ac;
-//	(void)av;
-//	(void)envp;
+
 	env_init(ac, av, envp);
 	while (1)
 	{
+		signal(SIGINT, signal_check);
 		welcome_message();
 		get_input(&line);
 		commands = ft_strsplit(line, ';');
