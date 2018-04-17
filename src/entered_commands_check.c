@@ -15,8 +15,6 @@ int 	check_builtins(char **command)
     return (0);
 }
 
-
-
 int 	fork_run_cmd(char *path, char **av)
 {
     pid_t	process;
@@ -88,9 +86,15 @@ int		exe_command(char **command)
 {
     int     bi;
     int     i = 0;
+	char 	*tmp;
 
     while (command[++i])
-        command[i] = tild_replace_home(command[i]);
+	{
+		tmp = command[i];
+		command[i] = tild_replace_home(tmp);
+		ft_strdel(&tmp);
+	}
+
     if ((bi = check_builtins(command)) == 1 || check_bins(command))
         return (1);
     if (bi == -1)
