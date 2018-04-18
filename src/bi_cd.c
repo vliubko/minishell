@@ -12,7 +12,7 @@ char    *tild_replace_home(char *line)
     char *find_after;
 
     if (!(find_after = ft_strchr(line, '~')))
-		return (ft_strdup(line));
+		return (line);
 	find_after++;
     if (*find_after == '\0' || *find_after == '/')
     {
@@ -21,7 +21,7 @@ char    *tild_replace_home(char *line)
         ft_strdel(&line);
         return (new_line);
     }
-	return (ft_strdup(line));
+	return (line);
 }
 
 

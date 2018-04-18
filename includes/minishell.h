@@ -41,10 +41,13 @@ int 				multi_commands(char **commands);
 int					bi_echo(char **av);
 char 	            *ft_pathjoin(char *p1, char *p2);
 int					bi_cd(char **av);
+int					cd_standart(char *path);
 char                *tild_replace_home(char *line);
 char 				*get_env_value_by_name(char *key);
 void                change_env_value_by_name(char *key, char *value);
 char 	            **list_to_array(void);
+int					bi_setenv(char **command);
+int 				bi_unsetenv(char **command);
 
 
 #endif
