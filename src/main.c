@@ -60,33 +60,6 @@ void	get_input(char **line)
 	ft_strdel(&trim);
 }
 
-//void	fork_me(char **av, char **envp)
-//{
-//	pid_t	process;
-//
-//	process = fork();
-//	if (process == 0)
-//	{
-//		execve("/bin/ls", 0, envp); // use execve(av[0], av, envp)!
-//		exit(0);
-//	}
-//	wait(&process);
-//}
-
-
-void 	print_list(void)
-{
-	t_env *list;
-
-	list = g_env;
-
-	while(list)
-	{
-		printf("%s=%s\n", list->key, list->value);
-		list = list->next;
-	}
-}
-
 void	free_env(void)
 {
 	t_env *tmp;
