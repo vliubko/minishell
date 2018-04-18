@@ -12,14 +12,8 @@ char 	**list_to_array(void)
     int 	new_size;
 
     list = g_env;
-    new_size = 0;
-    while (list)
-    {
-        new_size++;
-        list = list->next;
-    }
+    new_size = ft_count_elems((t_list*)list, NULL, 1);
     ret = (char**)malloc((sizeof(char*) * (new_size + 1)));
-    list = g_env;
     new_size = 0;
     while (list)
     {
