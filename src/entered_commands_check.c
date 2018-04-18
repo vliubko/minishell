@@ -6,7 +6,7 @@
 /*   By: vliubko <vliubko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 16:30:33 by vliubko           #+#    #+#             */
-/*   Updated: 2018/04/18 16:53:53 by vliubko          ###   ########.fr       */
+/*   Updated: 2018/04/18 17:18:03 by vliubko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,10 @@ int		check_bins(char **command)
 	int				i;
 	char			*full_path;
 	struct stat		f;
-	char			*leak;
 
-	leak = get_env_value_by_name("PATH");
-	path = ft_strsplit(leak, ':');
-	ft_strdel(&leak);
+	full_path = get_env_value_by_name("PATH");
+	path = ft_strsplit(full_path, ':');
+	ft_strdel(&full_path);
 	i = -1;
 	while (path && path[++i])
 	{
