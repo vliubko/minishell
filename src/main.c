@@ -6,19 +6,16 @@
 /*   By: vliubko <vliubko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 11:21:36 by vliubko           #+#    #+#             */
-/*   Updated: 2018/03/26 14:11:47 by vliubko          ###   ########.fr       */
+/*   Updated: 2018/04/18 16:58:56 by vliubko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-
-
 void	welcome_message(void)
 {
 	char	buf[MAXPATHLEN + 1];
-	char 	*login;
+	char	*login;
 
 	getcwd(buf, MAXPATHLEN);
 	login = get_env_value_by_name("USER");
@@ -33,24 +30,6 @@ void	welcome_message(void)
 	ft_putstr(" $> ");
 }
 
-char 	*ft_pathjoin(char *p1, char *p2)
-{
-	char	*tmp;
-	char 	*ret;
-
-	if (!p2 || !p1)
-		return (NULL);
-	if (p1[ft_strlen(p1)] != '/')
-		tmp = ft_strjoin(p1, "/");
-	else
-		tmp = ft_strdup(p1);
-	ret = ft_strjoin(tmp, p2);
-	ft_strdel(&tmp);
-	return (ret);
-}
-
-
-
 void	get_input(char **line)
 {
 	char	*trim;
@@ -62,7 +41,7 @@ void	get_input(char **line)
 
 void	free_env(void)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	while (g_env)
 	{
@@ -88,11 +67,10 @@ void	signal_check(int signo)
 int		main(int ac, char **av, char **envp)
 {
 	char	*line;
-	char 	**commands;
-	int 	ret;
+	char	**commands;
+	int		ret;
 
 	(void)ac;
-
 	env_init(ac, av, envp);
 	while (1)
 	{
@@ -107,7 +85,7 @@ int		main(int ac, char **av, char **envp)
 		if (ret == -1)
 		{
 			free_env();
-			break;
+			break ;
 		}
 	}
 	return (0);

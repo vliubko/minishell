@@ -6,7 +6,7 @@
 /*   By: vliubko <vliubko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 13:15:54 by vliubko           #+#    #+#             */
-/*   Updated: 2018/04/18 16:43:43 by vliubko          ###   ########.fr       */
+/*   Updated: 2018/04/18 17:02:02 by vliubko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void				env_init(int ac, char **av, char **envp);
 int					multi_commands(char **commands);
 int					check_builtins(char **command);
 int					bi_echo(char **av);
-char				*ft_pathjoin(char *p1, char *p2);
 int					bi_cd(char **av);
 int					cd_standart(char *path);
 char				*tild_replace_home(char *line);
@@ -49,5 +48,7 @@ void				change_env_value_by_name(char *key, char *value);
 char				**list_to_array(void);
 int					bi_setenv(char **command);
 int					bi_unsetenv(char **command);
+void				remove_env_value_by_name(char *key);
+void				add_env_value(char *key, char *value);
 
 #endif

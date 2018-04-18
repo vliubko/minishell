@@ -22,10 +22,12 @@ HEADER		 = includes/minishell.h
 
 FILES		:= main \
 				env \
+				builtins \
 				bi_echo \
 				bi_cd \
 				entered_commands_check \
-				env_commands
+				env_commands \
+				bi_set_unset_env
 
 S_DIR 	= src
 O_DIR 	= obj
