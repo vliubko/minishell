@@ -123,8 +123,8 @@ int		main(int ac, char **av, char **envp)
 	env_init(ac, av, envp);
 	while (1)
 	{
-		signal(SIGINT, signal_check);
 		welcome_message();
+		signal(SIGINT, signal_check);
 		get_input(&line);
 		commands = ft_strsplit(line, ';');
 		if (line)

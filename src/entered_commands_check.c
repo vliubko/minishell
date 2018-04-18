@@ -4,6 +4,12 @@
 
 #include "minishell.h"
 
+int     bi_clear(void)
+{
+    ft_putstr("\033[2J\033[1;1H");
+    return (1);
+}
+
 int 	check_builtins(char **command)
 {
     if (ft_strequ(command[0], "exit"))
@@ -12,6 +18,8 @@ int 	check_builtins(char **command)
         return (bi_echo(command + 1));
     if (ft_strequ(command[0], "cd"))
         return (bi_cd(command + 1));
+    if (ft_strequ(command[0], "clear"))
+        return (bi_clear());
     return (0);
 }
 
@@ -94,7 +102,6 @@ int		exe_command(char **command)
 		command[i] = tild_replace_home(tmp);
 		ft_strdel(&tmp);
 	}
-
     if ((bi = check_builtins(command)) == 1 || check_bins(command))
         return (1);
     if (bi == -1)
