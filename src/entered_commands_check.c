@@ -25,21 +25,15 @@ int 	bi_env(void)
 	return (1);
 }
 
-int 	bi_setenv(char **command)
-{
-	if (!command[0] || command[1] || !(ft_strchr(command[0], '=')) ||
-			command[1][0] == '=')
-	{
-		ft_putstr_fd("Usage: setenv [NAME]=[VALUE]\n", 2);
-		return (1);
-	}
-	// here
-}
+
 
 int 	check_builtins(char **command)
 {
     if (ft_strequ(command[0], "exit"))
-        return (-1);
+	{
+		system("leaks minishell | grep 'total leaked bytes'");
+		return (-1);
+	}
     if (ft_strequ(command[0], "echo"))
         return (bi_echo(command + 1));
     if (ft_strequ(command[0], "cd"))
@@ -50,6 +44,8 @@ int 	check_builtins(char **command)
 		return (bi_env());
 	if (ft_strequ(command[0], "setenv"))
 		return (bi_setenv(command + 1));
+	if (ft_strequ(command[0], "unsetenv"))
+		return (bi_unsetenv(command + 1));
     return (0);
 }
 
@@ -67,8 +63,7 @@ int 	fork_run_cmd(char *path, char **av)
     }
     wait(&process);
     ft_free_2d_array(envp);
-    if (path)
-        ft_strdel(&path);
+	(path) ? ft_strdel(&path) : 0;
     return (1);
 }
 
@@ -122,20 +117,26 @@ int 	check_bins(char **command)
 
 int		exe_command(char **command)
 {
-    int     bi;
-    int     i = 0;
-	char 	*tmp;
+    int				bi;
+    int				i = 0;
+	struct	stat	f;
 
     while (command[++i])
-	{
-		tmp = command[i];
-		command[i] = tild_replace_home(tmp);
-		ft_strdel(&tmp);
-	}
+		command[i] = tild_replace_home(command[i]);
     if ((bi = check_builtins(command)) == 1 || check_bins(command))
         return (1);
     if (bi == -1)
         return (-1);
+	if (lstat(command[0], &f) != -1)
+	{
+		if (f.st_mode & S_IFDIR)
+		{
+			cd_standart(ft_strdup(command[0]));
+			return (0);
+		}
+		else if (f.st_mode & S_IXUSR)
+			return (fork_run_cmd(ft_strdup(command[0]), command));
+	}
     ft_putstr("minishell: command not found: ");
     ft_putendl(command[0]);
     return (0);
