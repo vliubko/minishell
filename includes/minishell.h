@@ -37,7 +37,6 @@ typedef	struct		s_env
 t_env				*g_env;
 
 void 				env_init(int ac, char **av, char **envp);
-void				env_print();
 int 				multi_commands(char **commands);
 int					bi_echo(char **av);
 char 	            *ft_pathjoin(char *p1, char *p2);

@@ -10,6 +10,32 @@ int     bi_clear(void)
     return (1);
 }
 
+int 	bi_env(void)
+{
+	t_env	*print;
+
+	print = g_env;
+	while (print)
+	{
+		ft_putstr(print->key);
+		ft_putstr("=");
+		ft_putendl(print->value);
+		print = print->next;
+	}
+	return (1);
+}
+
+int 	bi_setenv(char **command)
+{
+	if (!command[0] || command[1] || !(ft_strchr(command[0], '=')) ||
+			command[1][0] == '=')
+	{
+		ft_putstr_fd("Usage: setenv [NAME]=[VALUE]\n", 2);
+		return (1);
+	}
+	// here
+}
+
 int 	check_builtins(char **command)
 {
     if (ft_strequ(command[0], "exit"))
@@ -20,6 +46,10 @@ int 	check_builtins(char **command)
         return (bi_cd(command + 1));
     if (ft_strequ(command[0], "clear"))
         return (bi_clear());
+	if (ft_strequ(command[0], "env"))
+		return (bi_env());
+	if (ft_strequ(command[0], "setenv"))
+		return (bi_setenv(command + 1));
     return (0);
 }
 
@@ -108,12 +138,6 @@ int		exe_command(char **command)
         return (-1);
     ft_putstr("minishell: command not found: ");
     ft_putendl(command[0]);
-    //if (ft_strequ(str, "ls"))
-    //	fork_me(0, 0);
-//	if (ft_strequ(str[0], "exit"))
-//		return (-1);
-//	if (ft_strequ(str[0], "env"))
-//		env_print();
     return (0);
 }
 

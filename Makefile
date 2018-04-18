@@ -22,7 +22,7 @@ HEADER		 = includes/minishell.h
 
 FILES		:= main \
 				env \
-				echo \
+				bi_echo \
 				bi_cd \
 				entered_commands_check \
 				env_commands

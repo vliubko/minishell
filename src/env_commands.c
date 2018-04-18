@@ -60,3 +60,21 @@ void    change_env_value_by_name(char *key, char *value)
         tmp = tmp->next;
     }
 }
+
+void    add_env_value(char *key, char *value)
+{
+    t_env   *tmp;
+    t_env   *head;
+    t_env   *new_node;
+
+    tmp = g_env;
+
+    new_node = (t_env*)ft_memalloc(sizeof(t_env));
+    new_node->key = ft_strdup(key);
+    new_node->value = ft_strdup(value);
+    new_node->next = NULL;
+
+    while (tmp)
+        tmp = tmp->next;
+    tmp->next = new_node;
+}
