@@ -37,6 +37,7 @@ typedef	struct		s_env
 t_env				*g_env;
 
 void				env_init(int ac, char **av, char **envp);
+void				free_env(void);
 int					multi_commands(char **commands);
 int					check_builtins(char **command);
 int					bi_echo(char **av);
@@ -50,5 +51,7 @@ int					bi_setenv(char **command);
 int					bi_unsetenv(char **command);
 void				remove_env_value_by_name(char *key);
 void				add_env_value(char *key, char *value);
+void				welcome_message(void);
+int					exe_command(char **command);
 
 #endif

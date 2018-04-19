@@ -6,7 +6,7 @@
 /*   By: vliubko <vliubko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 16:30:33 by vliubko           #+#    #+#             */
-/*   Updated: 2018/04/18 17:18:03 by vliubko          ###   ########.fr       */
+/*   Updated: 2018/04/19 12:52:16 by vliubko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		access_check(char *path, struct stat f, char **command)
 			return (fork_run_cmd(path, command));
 		else
 		{
-			ft_putstr("minishell: permission denied: ");
+			ft_putstr_fd("minishell: permission denied: ", 2);
 			ft_putendl(path);
 		}
 		ft_strdel(&path);
@@ -77,11 +77,30 @@ int		check_bins(char **command)
 	return (0);
 }
 
+int		run_binary_from_line(char *path, char **command)
+{
+	struct stat		f;
+
+	if (lstat(path, &f) != -1)
+	{
+		if (f.st_mode & S_IFDIR)
+			return (cd_standart(ft_strdup(path)));
+		else if (f.st_mode & S_IXUSR)
+			return (fork_run_cmd(ft_strdup(path), command));
+		else
+		{
+			ft_putstr_fd("minishell: permission denied: ", 2);
+			ft_putendl(path);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 int		exe_command(char **command)
 {
 	int				bi;
 	int				i;
-	struct stat		f;
 
 	i = 0;
 	while (command[++i])
@@ -90,32 +109,9 @@ int		exe_command(char **command)
 		return (1);
 	if (bi == -1)
 		return (-1);
-	if (lstat(command[0], &f) != -1)
-	{
-		if (f.st_mode & S_IFDIR)
-			return (cd_standart(ft_strdup(command[0])));
-		else if (f.st_mode & S_IXUSR)
-			return (fork_run_cmd(ft_strdup(command[0]), command));
-	}
+	if (run_binary_from_line(command[0], command) == 1)
+		return (1);
 	ft_putstr("minishell: command not found: ");
 	ft_putendl(command[0]);
-	return (0);
-}
-
-int		multi_commands(char **commands)
-{
-	int		i;
-	char	**run;
-	int		ret;
-
-	i = -1;
-	while (commands[++i])
-	{
-		run = ft_strsplit_whitespaces(commands[i]);
-		ret = exe_command(run);
-		ft_free_2d_array(run);
-		if (ret == -1)
-			return (-1);
-	}
 	return (0);
 }

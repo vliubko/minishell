@@ -12,24 +12,6 @@
 
 #include "minishell.h"
 
-void	welcome_message(void)
-{
-	char	buf[MAXPATHLEN + 1];
-	char	*login;
-
-	getcwd(buf, MAXPATHLEN);
-	login = get_env_value_by_name("USER");
-	ft_putstr(GREEN_FONT);
-	ft_putstr(login);
-	ft_strdel(&login);
-	ft_putstr(BLUE_FONT);
-	ft_putstr("@ ");
-	ft_putstr(YELLOW_FONT);
-	ft_putendl(buf);
-	ft_putstr(COLOR_OFF);
-	ft_putstr(" $> ");
-}
-
 void	get_input(char **line)
 {
 	char	*trim;
@@ -39,19 +21,22 @@ void	get_input(char **line)
 	ft_strdel(&trim);
 }
 
-void	free_env(void)
+int		multi_commands(char **commands)
 {
-	t_env	*tmp;
+	int		i;
+	char	**run;
+	int		ret;
 
-	while (g_env)
+	i = -1;
+	while (commands[++i])
 	{
-		ft_strdel(&g_env->key);
-		ft_strdel(&g_env->value);
-		tmp = g_env;
-		free(tmp);
-		g_env = g_env->next;
+		run = ft_strsplit_whitespaces(commands[i]);
+		ret = exe_command(run);
+		ft_free_2d_array(run);
+		if (ret == -1)
+			return (-1);
 	}
-	free(g_env);
+	return (0);
 }
 
 void	signal_check(int signo)

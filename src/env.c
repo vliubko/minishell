@@ -12,6 +12,21 @@
 
 #include "minishell.h"
 
+void	free_env(void)
+{
+	t_env	*tmp;
+
+	while (g_env)
+	{
+		ft_strdel(&g_env->key);
+		ft_strdel(&g_env->value);
+		tmp = g_env;
+		free(tmp);
+		g_env = g_env->next;
+	}
+	free(g_env);
+}
+
 void	env_init(int ac, char **av, char **envp)
 {
 	int		i;
