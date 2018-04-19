@@ -27,7 +27,8 @@ FILES		:= main \
 				bi_cd \
 				entered_commands_check \
 				env_commands \
-				bi_set_unset_env
+				bi_set_unset_env \
+				prompt
 
 S_DIR 	= src
 O_DIR 	= obj

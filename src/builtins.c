@@ -36,10 +36,7 @@ int		bi_env(void)
 int		check_builtins(char **command)
 {
 	if (ft_strequ(command[0], "exit"))
-	{
-		system("leaks minishell | grep 'total leaked bytes'");
 		return (-1);
-	}
 	if (ft_strequ(command[0], "echo"))
 		return (bi_echo(command + 1));
 	if (ft_strequ(command[0], "cd"))
